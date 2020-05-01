@@ -1,0 +1,110 @@
+
+  <%= link_to '登録情報', "/users/#{current_user.id}", method: :get %>
+  <div class="contents">
+    <div class="text text01">
+      <%= form_with(model: @user, url: {controller: 'users', action: 'update' }, local: true) do |form| %>
+      <h2>登録情報</h2>
+      <div class="col-lg-6">
+        <%= form.label :store_name, "店名" %>
+        <%= form.text_field :store_name, placeholder: "店名", class: "form-control" %>
+      </div>
+      <div class="col-lg-6">
+        <%= form.label :zip_cord, "郵便番号" %>
+        <%= form.text_field :zip_cord, placeholder: "郵便番号", class: "form-control" %>
+      </div>
+      <div class="col-lg-6">
+        <%= form.label :loc, "所在地" %>
+        <%= form.text_field :loc, placeholder: "所在地", class: "form-control" %>
+      </div>
+      <div class="col-lg-6">
+        <%= form.label :phone, "電話番号" %>
+        <%= form.text_field :phone, placeholder: "電話番号", class: "form-control" %>
+      </div>
+      <div class="col-lg-6">
+        <%= form.label :email, "メールアドレス" %>
+        <%= form.email_field :email, placeholder: "メールアドレス", class: "form-control" %>
+      </div>
+      <div class="col-lg-6">
+        <%= form.label :hp_url, "ホームページ" %>
+        <%= form.text_field :hp_url, placeholder: "ホームページ", class: "form-control" %>
+      </div>
+      <div class="col-lg-6">
+        <%= form.label :delivery, "出前" %>
+        <%= form.select :delivery, [ ["可能"], ["不可"], ["要相談"] ], prompt: "選択してください" %>
+      </div>
+      <div class="col-lg-6">
+        <%= form.label :take_out, "持ち帰り" %>
+        <%= form.select :take_out, [ ["可能"], ["不可"], ["要相談"] ], prompt: "選択してください" %>
+      </div>
+      <div class="col-lg-6">
+        <%= form.label :start_time, "営業開始時間" %>
+        <%= form.time_select :start_time, placeholder: "営業開始時間", class: "form-control" %>
+      </div>
+      <div class="col-lg-6">
+        <%= form.label :end_time, "終業時間" %>
+        <%= form.time_select :end_time, placeholder: "終業時間", class: "form-control" %>
+      </div>
+      <div class="col-lg-6">
+        <%= form.label :pre_time, "準備・休憩時間等ありましたらお書き下さい。" %>
+        <%= form.text_field :pre_start, placeholder: "13:00〜17:00など", class: "form-control" %>
+      </div>
+      <div class="col-lg-6">
+        <%= form.label :remarks, "備考" %>
+        <%= form.text_field :remarks, placeholder: "備考", class: "form-control" %>
+      </div>
+      <div class="field">
+        定休日にチェックを入れて下さい。
+        <ul>
+          <li>
+            <%= form.label :mon_hol, "月曜日" %>
+            <%= form.radio_button :mon_hol, "営業日" %> 営業日 <%= form.radio_button :mon_hol, "休業日" %> 休業日 <%= form.radio_button :mon_hol, "不定休" %> 不定休
+          </li>
+          <li>
+            <%= form.label :tue_hol, "火曜日" %>
+            <%= form.radio_button :tue_hol, "営業日" %> 営業日 <%= form.radio_button :tue_hol, "休業日" %> 休業日 <%= form.radio_button :tue_hol, "不定休" %> 不定休
+          </li>
+          <li>
+            <%= form.label :wed_hol, "水曜日" %>
+            <%= form.radio_button :wed_hol, "営業日" %> 営業日 <%= form.radio_button :wed_hol, "休業日" %> 休業日 <%= form.radio_button :wed_hol, "不定休" %> 不定休
+          </li>
+          <li>
+            <%= form.label :thu_hol, "木曜日" %>
+            <%= form.radio_button :thu_hol, "営業日" %> 営業日 <%= form.radio_button :thu_hol, "休業日" %> 休業日 <%= form.radio_button :thu_hol, "不定休" %> 不定休
+          </li>
+          <li>
+            <%= form.label :fri_hol, "金曜日" %>
+            <%= form.radio_button :fri_hol, "営業日" %> 営業日 <%= form.radio_button :fri_hol, "休業日" %> 休業日 <%= form.radio_button :fri_hol, "不定休" %> 不定休
+          </li>
+          <li>
+            <%= form.label :sat_hol, "土曜日" %>
+            <%= form.radio_button :sat_hol, "営業日" %> 営業日 <%= form.radio_button :sat_hol, "休業日" %> 休業日 <%= form.radio_button :sat_hol, "不定休" %> 不定休
+          </li>
+          <li>
+            <%= form.label :sun_hol, "日曜日" %>
+            <%= form.radio_button :sun_hol, "営業日" %> 営業日 <%= form.radio_button :sun_hol, "休業日" %> 休業日 <%= form.radio_button :sun_hol, "不定休" %> 不定休
+          </li>
+          <li>
+            <%= form.label :hol_hol, "祝　日" %>
+            <%= form.radio_button :hol_hol, "営業日" %> 営業日 <%= form.radio_button :hol_hol, "休業日" %> 休業日 <%= form.radio_button :hol_hol, "不定休" %> 不定休
+          </li>
+        </ul>
+      </div>
+      <h2>プロフィール画像</h2>
+      <div class="form-group file">
+      <% if @user.image.attached? %>
+      
+        <div class="image" style="background-image: url(<%= rails_blob_path(@user.image) %>)"></div>
+      <% else %>
+        <div class="image"><%= image_tag "default_user.png" %></div>
+      <% end %>
+      
+        <%= form.file_field :image, class: "form-control floating-label", placeholder: "画像アップロード" %>
+      </div>
+      <div class="form-group">
+        <%= form.submit "送信", class: "btn btn-primary withripple" %>
+      </div>
+
+    <% end %>
+    </div>
+  </div>
+</div>

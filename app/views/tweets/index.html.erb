@@ -1,0 +1,31 @@
+<p>自粛じゃ死ぬ！なんとか助けて下さい！！</p>
+<% if user_signed_in? && current_user.full_profile? %>
+    <a href="tweets/new">投稿する</a>
+    <%= link_to '登録情報', "/users/#{current_user.id}", method: :get %>
+    <%= link_to "ログアウト", destroy_user_session_path, method: :delete %>
+<% else %>
+  <% unless user_signed_in? %>
+    <%= link_to "ログイン", new_user_session_path, class: 'post' %>
+    <%= link_to "店舗登録はこちら", new_user_registration_path, class: 'post' %>
+  <% end %>
+<% end %>
+<% if user_signed_in? %>
+  <% unless current_user.full_profile? %>
+    <header class="header_top panel panel-default col-lg-12 no-profile">
+      <h2>まずは、あなたの基本プロフィールを登録しましょう！</h2>
+      <%= link_to "プロフィールを登録する", edit_user_path(current_user), { class: "btn btn-lg btn-primary withripple" } %>
+      <%= link_to "ログアウト", destroy_user_session_path, method: :delete %>
+    </header>
+    <% end %>
+<% end %>
+
+
+
+<% @tweets.each do |tweet| %>
+
+  <ul>
+    <li>店名：<%= tweet.user.store_name %></li>
+    <li><%= image_tag tweet.img.to_s %></li>
+    <li><%= tweet.text %></li>
+  </ul>
+<% end %>

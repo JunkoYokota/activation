@@ -1,0 +1,20 @@
+  
+<div class="contents row">
+  <div class="container">
+
+    <h3>
+      投稿する
+    </h3>
+    <%= form_with(model: @tweet, local: true) do |form| %>
+    <%= form.label :text %>
+    <%= form.text_field :text %>
+    <div class="form-group file">
+      <%= form.file_field :img, id: :tweet_img %>
+      <p><%= form.check_box :remove_img %>画像を削除する</p>
+      </div>
+      <div class="form-group">
+        <%= form.submit "送信", class: "btn btn-primary withripple" %>
+      </div>
+<% end %>
+  </div>
+</div>

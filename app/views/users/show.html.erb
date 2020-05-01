@@ -1,0 +1,51 @@
+<div class="contents row">
+  <a href="/tweets/new">近況を投稿をする</a>
+  <p><%= @user.store_name %>さんの登録状況</p>
+  <% if @user.image.attached? %>
+  <div class="image" style="background-image: url(<%= rails_blob_path(@user.image) %>)"></div>
+  <% else %>
+  <div class="image"><%= image_tag "default_user.png" %></div>
+  <% end %>
+  
+  <ul>
+    <li>所在地：<%= @user.zip_cord %> <%= @user.loc %></li>
+    <li>TEL番号：<%= @user.phone %></li>
+    <li>メール：<%= @user.email %></li>
+    <li>ホームページ：<%= @user.hp_url %></li>
+    <li>出前：<%= @user.delivery %></li>
+    <li>持ち帰り：<%= @user.take_out %></li>
+  </ul>
+  <ul>営業日
+    <li>月曜日：<%= @user.mon_hol %></li>
+    <li>火曜日：<%= @user.tue_hol %></li>
+    <li>水曜日：<%= @user.tue_hol %></li>
+    <li>木曜日：<%= @user.wed_hol %></li>
+    <li>金曜日：<%= @user.thu_hol %></li>
+    <li>土曜日：<%= @user.sat_hol %></li>
+    <li>日曜日：<%= @user.sun_hol %></li>
+    <li>祝　日：<%= @user.hol_hol %></li>
+    <li>備考<%= @user.remarks %></li>
+  </ul>
+  
+  <ul>
+    <li>営業時間：<%= @user.start_time %> 〜 <%= @user.end_time %></li>
+    <% unless @user.pre_time == "-" %>
+    <li>準備時間：<%= @user.pre_time %></li>
+    <% end %>
+
+  </ul>
+  <%= link_to "登録情報の変更はこちら", "/users/#{current_user.id}/edit", method: :get %>
+  <%= link_to "ログアウト", destroy_user_session_path, method: :delete %>
+
+  <p><%= @user.store_name %>さんの投稿</p>
+  <% @tweets.each do |tweet| %>
+    <ul>
+    <li><%= tweet.user.store_name %></li>
+    <li><%= image_tag tweet.img.to_s %></li>
+    <li><%= tweet.text %></li>
+  </ul>
+  <% end %>
+
+  
+  <%= paginate(@tweets) %>
+</div>
